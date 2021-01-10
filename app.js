@@ -106,7 +106,7 @@ class Labyrinthe {
    // Genere Labyrinthe
    genererLabyrinthe() {
       this.EL = this.aleatoire(this.EL);
-      let D = new dsd(this.M * this.M);
+      let D = new DSD(this.M * this.M);
       D.init();
       let s = this.hashage([0, 0]);
       let e = this.hashage([this.N - 1, this.M - 1]);
@@ -114,7 +114,7 @@ class Labyrinthe {
       this.Tableau[2 * this.N - 1][2 * this.M] = ' ';
 
       // Demarer l'algorithm de Kruskal
-      // l'algorithm de Kruskal est dependent de la classe dsd
+      // l'algorithm de Kruskal est dependent de la classe DSD
       for (let i = 0; i < this.EL.length; i++) {
          let x = this.hashage(this.EL[i][0]);
          let y = this.hashage(this.EL[i][1]);
@@ -152,7 +152,7 @@ class Labyrinthe {
                if (this.Tableau[i][j] != ' ') {
                   this.ctx.fillStyle = "#6d6d6d";
                   this.ctx.fillRect(scale * i, scale * j, scale, scale);
-               } else if (i < 10 && j < 10) {
+               } else if (i < 20 && j < 20) {
                   this.temp.push([i, j]);
                }
             }
@@ -291,7 +291,7 @@ class Labyrinthe {
    }
 }
 
-class dsd {
+class DSD {
 
    constructor(size) {
       this.N = size;
@@ -341,54 +341,7 @@ class Joueur {
       if (this.type === 'humain' || this.type === 'h') {
          this.evenements();
       }
-
-      // Pour le type d'ennemie 1
-      // Il deplace seulement haut et en bas
-      if (this.type === 'ennemie1') {
-
-         setInterval(() => {
-            const mouvement = Math.ceil(this.labyrinthe.random(0, 2));
-
-            switch (mouvement) {
-               case 1:
-                  this.labyrinthe.deplacerUp(this);
-                  break;
-               case 2:
-                  this.labyrinthe.deplacerdown(this);
-                  break;
-
-               default:
-                  break;
-            }
-         }, 100);
-      }
-
-      // Pour le type d'ennemie 2
-      // Il deplace seulement haut, en bas, Gauche et droite
-      if (this.type === 'ennemie2') {
-
-         setInterval(() => {
-            const mouvement = Math.ceil(this.labyrinthe.random(0, 4));
-
-            switch (mouvement) {
-               case 1:
-                  this.labyrinthe.deplacerUp(this);
-                  break;
-               case 2:
-                  this.labyrinthe.deplacerdown(this);
-                  break;
-               case 3:
-                  this.labyrinthe.deplacerGauche(this);
-                  break;
-               case 4:
-                  this.labyrinthe.deplacerDroite(this);
-                  break;
-
-               default:
-                  break;
-            }
-         }, 100);
-      }      
+      
    }
 
    // Dessiner le Joueur
@@ -465,4 +418,65 @@ class Joueur {
       this.idCount += 1;
       return this.idCount;
    }
+}
+
+class Ennemie extends Joueur {
+
+   constructor(labyrinthe, type, couleur, vitesse, image) {
+      super(labyrinthe, type, couleur, image);
+      this.vitesse = vitesse;
+
+      this.mouvements();
+   }
+
+   mouvements() {
+      // Pour le type d'ennemie 1
+      // Il deplace seulement haut et en bas
+      if (this.type === 'ennemie1') {
+
+         setInterval(() => {
+            const mouvement = Math.ceil(this.labyrinthe.random(0, 2));
+
+            switch (mouvement) {
+               case 1:
+                  this.labyrinthe.deplacerUp(this);
+                  break;
+               case 2:
+                  this.labyrinthe.deplacerdown(this);
+                  break;
+
+               default:
+                  break;
+            }
+         }, this.vitesse);
+      }
+
+      // Pour le type d'ennemie 2
+      // Il deplace seulement haut, en bas, Gauche et droite
+      if (this.type === 'ennemie2') {
+
+         setInterval(() => {
+            const mouvement = Math.ceil(this.labyrinthe.random(0, 4));
+
+            switch (mouvement) {
+               case 1:
+                  this.labyrinthe.deplacerUp(this);
+                  break;
+               case 2:
+                  this.labyrinthe.deplacerdown(this);
+                  break;
+               case 3:
+                  this.labyrinthe.deplacerGauche(this);
+                  break;
+               case 4:
+                  this.labyrinthe.deplacerDroite(this);
+                  break;
+
+               default:
+                  break;
+            }
+         }, this.vitesse);
+      }
+   }
+
 }
