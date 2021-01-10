@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Labyrinthe - khechini - Damien</title>
+   <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+   <div class="container">
+      <div class="title">
+         <h3>Labyrinthe - Khechini - Damien</h3>
+      </div>
+      <div class="platform">
+         <canvas id="labyrinthe" width="623" height="623"></canvas>
+      </div>
+   </div>
+
+   <script src="./app.js"></script>
+
+   <script>
+      const labyrinthe = new Labyrinthe(10, 10);
+      labyrinthe.init();
+      labyrinthe.ajouterBords();
+      labyrinthe.genererLabyrinthe();
+      labyrinthe.dessinerLabyrinthe("labyrinthe");
+
+      const joueur1 = new Joueur(labyrinthe, 'humain', '', './img/khechini.png');
+      const Ennemie1 = new Joueur(labyrinthe, 'ennemie2', '', './img/clown.png');
+      const Ennemie2 = new Joueur(labyrinthe, 'ennemie1', '', './img/clown2.png');
+      const Ennemie3 = new Joueur(labyrinthe, 'ennemie2', '', './img/clown3.png');
+      
+   </script>
+</body>
+
+</html>
