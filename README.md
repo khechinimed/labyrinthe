@@ -1,4 +1,4 @@
-# Le Projet Labyrinthe - Khechini - Damien
+# Le Projet Labyrinthe - Khechini
 
 ![](screenshot.png)
 
